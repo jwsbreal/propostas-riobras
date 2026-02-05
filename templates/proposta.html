@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Proposta Comercial</title>
+
+    <style>
+      @page {
+        size: A4;
+        margin: 120px 40px 100px 40px;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #000;
+      }
+
+      header {
+        position: fixed;
+        top: -90px;
+        left: 0;
+        right: 0;
+        height: 80px;
+        text-align: center;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      footer {
+        position: fixed;
+        bottom: -70px;
+        left: 0;
+        right: 0;
+        height: 60px;
+        text-align: center;
+        font-size: 9px;
+        color: #444;
+      }
+
+      .cabecalho-titulo {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+
+      .linha {
+        border-bottom: 1px solid #000;
+        margin: 15px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #000;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+      }
+
+      .page-number:after {
+        content: "Página " counter(page);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="file:///{{ caminho_logo }}" alt="Logo" style="height: 60px" />
+    </header>
+
+    <footer>
+      <div>Inscrição Estadual: 11.814.506 | CNPJ: 38.349.634/0001-27</div>
+      <div>Rua Operário Fortes, 63 - Ramos - Rio de Janeiro - RJ</div>
+      <div>contato@riobrasempilhadeiras.com.br | (21) 3867-1644</div>
+      <div class="page-number"></div>
+    </footer>
+
+    <div class="cabecalho-titulo">PROPOSTA COMERCIAL</div>
+
+    <div class="linha"></div>
+
+    <p><strong>Código:</strong> {{ codigo }}</p>
+    <p><strong>Data:</strong> {{ data }}</p>
+    <p><strong>Vendedor:</strong> {{ vendedor }}</p>
+
+    <div class="linha"></div>
+
+    <p><strong>Empresa:</strong> {{ empresa }}</p>
+    <p><strong>CNPJ:</strong> {{ cnpj }}</p>
+    <p><strong>Contato:</strong> {{ contato }}</p>
+    <p><strong>Telefone:</strong> {{ telefone }}</p>
+
+    <div class="linha"></div>
+
+    <p>
+      Conforme solicitação de V.Sªs., passamos a descrever nossa proposta para
+      fornecimento de equipamento fabricado no Brasil, conforme descrições
+      abaixo:
+    </p>
+
+    <p><h3>MODELO DE EQUIPAMENTO:</h3> {{ modelo }}</p>
+    <table>
+        <tr>
+          <th>Descrição</th>
+          <th>Valor</th>
+        </tr>
+        <tr>
+          <td>Capacidade de carga</td>
+          <td>{{ capacidade }}</td>
+        </tr>
+        <tr>
+          <td>Tipo de rodagem</td>
+          <td>{{ rodagem }}</td>
+        </tr>
+        <tr>
+          <td>Tipo de roda</td>
+          <td>{{ tipo_roda }}</td>
+        </tr>
+        <tr>
+          <td>Largura do garfo</td>
+          <td>{{ largura_garfo }}</td>
+        </tr>
+      <tr>
+        <td>Altura máxima</td>
+        <td>1600 mm</td>
+      </tr>
+    </table>
+
+    <h3>CONDIÇÕES COMERCIAIS</h3>
+
+    <table>
+      <tr>
+        <th>Descrição</th>
+        <th>Qtd</th>
+        <th>À Vista</th>
+        <th>Faturado / Cartão</th>
+      </tr>
+
+      <tr>
+        <td>
+          {{ descricao }} {{ linha }}<br />
+          Rodagem: {{ rodagem }}<br />
+          Material: {{ material }}<br />
+          Garfo: {{ largura_garfo }}
+        </td>
+        <td>01</td>
+        <td>
+          R$ {{ "{:,.2f}".format(preco_avista) .replace(",", "X") .replace(".",
+          ",") .replace("X", ".") }}
+        </td>
+        <td>
+          R$ {{ "{:,.2f}".format(preco_faturado) .replace(",", "X")
+          .replace(".", ",") .replace("X", ".") }}
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">Desconto</td>
+        <td>
+          - R$ {{ "{:,.2f}".format(desconto) .replace(",", "X") .replace(".",
+          ",") .replace("X", ".") }}
+        </td>
+        <td>
+          - R$ {{ "{:,.2f}".format(desconto) .replace(",", "X") .replace(".",
+          ",") .replace("X", ".") }}
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">Frete</td>
+        <td>
+          R$ {{ "{:,.2f}".format(frete) .replace(",", "X") .replace(".", ",")
+          .replace("X", ".") }}
+        </td>
+        <td>
+          R$ {{ "{:,.2f}".format(frete) .replace(",", "X") .replace(".", ",")
+          .replace("X", ".") }}
+        </td>
+      </tr>
+
+      <tr>
+        <th colspan="2">TOTAL</th>
+        <th>
+          R$ {{ "{:,.2f}".format(total_avista) .replace(",", "X") .replace(".",
+          ",") .replace("X", ".") }}
+        </th>
+        <th>
+          R$ {{ "{:,.2f}".format(total_faturado) .replace(",", "X")
+          .replace(".", ",") .replace("X", ".") }}
+        </th>
+      </tr>
+    </table>
+
+    <p><strong>Prazo de entrega:</strong> até 7 dias úteis</p>
+    <p><strong>Garantia:</strong> 06 meses</p>
+    <p><strong>Validade da proposta:</strong> 05 dias</p>
+
+
+
+
+    
+    <div class="assinatura">
+      <p>Atenciosamente,</p>
+      <p><strong>Setor Comercial</strong></p>
+    </div>
+  </body>
+</html>
