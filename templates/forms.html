@@ -23,8 +23,23 @@
       <label>Linha do Produto</label>
       <select id="linha" name="linha" required>
         <option value="">Selecione</option>
-        <option value="TM2500">TM2500 – Transpalete Manual 2.500 kg</option>
-        <option value="TM3000">TM3000 – Transpalete Manual 3.000 kg</option>
+
+        <optgroup label="Linha TM">
+          <option value="TM2500">TM2500 – Transpalete Manual 2.500 kg</option>
+          <option value="TM3000">TM3000 – Transpalete Manual 3.000 kg</option>
+        </optgroup>
+
+        <optgroup label="Linha PM">
+          <option value="PM516">PM516 – Empilhadeira Manual 500 kg</option>
+          <option value="PM1016">PM1016 – Empilhadeira Manual 1.000 kg</option>
+          <option value="PM1516">PM1516 – Empilhadeira Manual 1.500 kg</option>
+        </optgroup>
+
+        <optgroup label="Linha PE">
+          <option value="PE1016">PE1016 – Semi Elétrica 1.600 mm</option>
+          <option value="PE1026">PE1026 – Semi Elétrica 2.600 mm</option>
+          <option value="PM1034">PM1034 – Semi Elétrica 3.400 mm</option>
+        </optgroup>
       </select>
 
       <label>Rodagem</label>
@@ -43,7 +58,6 @@
         <option value="525">525 mm</option>
         <option value="680">680 mm</option>
       </select>
-
 
       <label>Desconto (R$)</label>
       <input type="number" step="0.01" name="desconto" placeholder="Opcional" />
@@ -74,13 +88,32 @@
       const material = document.getElementById("material");
       const largura = document.getElementById("largura_garfo");
 
-      linha.addEventListener("change", () => {
+      function resetCamposTM() {
         rodagem.innerHTML = '<option value="">Selecione</option>';
         material.innerHTML = '<option value="">Selecione</option>';
+        largura.value = "";
+
+        rodagem.disabled = true;
+        material.disabled = true;
+        largura.disabled = true;
+      }
+
+      linha.addEventListener("change", () => {
+        resetCamposTM();
 
         if (!linha.value) return;
 
-        configuracao[linha.value].rodagens.forEach((r) => {
+        const ehTM = linha.value.startsWith("TM");
+
+        // Se NÃO for TM → mantém campos bloqueados
+        if (!ehTM) {
+          return;
+        }
+
+        // Se for TM → habilita fluxo normal
+        const configLinha = configuracao[linha.value];
+
+        configLinha.rodagens.forEach((r) => {
           rodagem.innerHTML += `<option value="${r}">${r}</option>`;
         });
 
@@ -92,7 +125,9 @@
 
         if (!rodagem.value) return;
 
-        configuracao[linha.value].materiais.forEach((m) => {
+        const configLinha = configuracao[linha.value];
+
+        configLinha.materiais.forEach((m) => {
           material.innerHTML += `<option value="${m}">${m}</option>`;
         });
 

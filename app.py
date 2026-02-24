@@ -43,87 +43,98 @@ def forms():
 
         desconto = float(request.form.get("desconto") or 0)
         frete = float(request.form.get("frete") or 0)
-
-        # Dados do formulário
         linha = request.form["linha"]
-        rodagem = request.form["rodagem"]
-        material = request.form["material"]
-        largura_garfo = request.form["largura_garfo"]
-
         produto = PRODUTOS.get(linha)
 
-        if not produto:
-            return "Produto não encontrado", 400
+    if not produto:
 
-        try:
-            rodagem_info = produto["rodagem"][rodagem]
-            material_info = rodagem_info["materiais"][material]
-        except KeyError:
-
-            return "Configuração de produto inválida", 400
-
-        rodagem_info = produto["rodagem"][rodagem]
-        material_info = rodagem_info["materiais"][material]
-
-        preco_avista = material_info["avista"]
-        preco_faturado = material_info["faturado"]
-
-        total_avista = round(preco_avista - desconto + frete, 2)
-        total_faturado = round(preco_faturado - desconto + frete, 2)
-
-        caminho_logo = Path("static/logo.png").resolve().as_uri()
-
-        dados = {
-            "empresa": request.form["empresa"],
-            "cnpj": request.form.get("cnpj"),
-            "contato": request.form.get("contato"),
-            "telefone": request.form.get("telefone"),
-
-            "linha": linha,
-            "rodagem": rodagem,
-            "material": material,
-            "largura_garfo": largura_garfo,
-
-            "vendedor": request.form["vendedor"],
-            "codigo": codigo,
-            "data": data_hoje,
-            "caminho_logo": caminho_logo,
-
-            "produto": produto,
-
-            "preco_avista": preco_avista,
-            "preco_faturado": preco_faturado,
-            "tipo_roda": rodagem_info["roda"],
-            "capacidade": produto["capacidade"],
-            "descricao": produto["descricao"],
-
-            "desconto": desconto,
-            "frete": frete,
-            "total_avista": total_avista,
-            "total_faturado": total_faturado,
+        return "Produto não encontrado", 400
 
 
-        }
+# Detecta se é linha TM (tem rodagem)
+eh_tm = "rodagem" in produto
 
-        html_renderizado = render_template("proposta.html", **dados)
+if eh_tm:
+    rodagem = request.form.get("rodagem")
+    material = request.form.get("material")
+    largura_garfo = request.form.get("largura_garfo")
 
-        linha_limpa = linha.replace(" ", "_")
-        empresa_limpa = dados["empresa"].replace(" ", "_")
+try:
+    rodagem_info = produto["rodagem"][rodagem]
+    material_info = rodagem_info["materiais"][material]
 
-        nome_arquivo = f"PROP-{linha_limpa}_-_{codigo}_-_{empresa_limpa}.pdf"
-        caminho_pdf = os.path.join(pasta_destino, nome_arquivo)
+except KeyError:
 
-        pdfkit.from_string(
-            html_renderizado,
-            caminho_pdf,
-            configuration=config,
-            options={"enable-local-file-access": ""},
-        )
+        return "Configuração de produto inválida", 400
 
-        return send_file(caminho_pdf, as_attachment=True)
+    preco_avista = material_info["a vista"]
+    preco_faturado = material_info["faturado"]
+    tipo_roda = rodagem_info["roda"]
 
-    # GET
-    return render_template("forms.html", produtos=PRODUTOS)
+else:
+    # Produtos PM/PE
+rodagem = "-"
+material = "-"
+largura_garfo = "-"
+tipo_roda = "-"
+
+preco_avista = produto["a vista"]
+preco_faturado = produto["faturado"]
+
+caminho_logo = Path("static/logo.png").resolve().as_uri()
+
+dados = {
+    "empresa": request.form["empresa"],
+    "cnpj": request.form.get("cnpj"),
+    "contato": request.form.get("contato"),
+    "telefone": request.form.get("telefone"),
+
+    "linha": linha,
+    "rodagem": rodagem,
+    "material": material,
+    "largura_garfo": largura_garfo,
+
+    "vendedor": request.form["vendedor"],
+    "codigo": codigo,
+    "data": data_hoje,
+    "caminho_logo": caminho_logo,
+
+    "produto": produto,
+    "eh_tm": eh_tm,
+
+    "preco_avista": preco_avista,
+    "preco_faturado": preco_faturado,
+    "tipo_roda": rodagem_info["roda"],
+    "capacidade": produto["capacidade"],
+    "descricao": produto["descricao"],
+
+    "desconto": desconto,
+    "frete": frete,
+    "total_avista": total_avista,
+    "total_faturado": total_faturado,
+
+
+}
+
+html_renderizado = render_template("proposta.html", **dados)
+
+linha_limpa = linha.replace(" ", "_")
+empresa_limpa = dados["empresa"].replace(" ", "_")
+
+nome_arquivo = f"PROP-{linha_limpa}_-_{codigo}_-_{empresa_limpa}.pdf"
+caminho_pdf = os.path.join(pasta_destino, nome_arquivo)
+
+pdfkit.from_string(
+    html_renderizado,
+    caminho_pdf,
+    configuration=config,
+    options={"enable-local-file-access": ""},
+)
+
+return send_file(caminho_pdf, as_attachment=True)
+
+# GET
+return render_template("forms.html", produtos=PRODUTOS)
 
 
 if __name__ == "__main__":

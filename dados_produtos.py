@@ -1,5 +1,6 @@
 PRODUTOS = {
     "TM2500": {
+        "tipo": "Transpalete Manual",
         "capacidade": "2.500 kg",
         "descricao": "Transpalete Manual 2.500kg",
         "rodagem": {
@@ -7,11 +8,11 @@ PRODUTOS = {
                 "roda": "Ø74x93 c/ rolamento de blindagem dupla",
                 "materiais": {
                     "Nylon": {
-                        "a vista": 2000,
+                        "avista": 2000,
                         "faturado": 2100
                     },
                     "Poliuretano": {
-                        "a vista": 2200,
+                        "avista": 2200,
                         "faturado": 2300
                     }
                 }
@@ -20,11 +21,11 @@ PRODUTOS = {
                 "roda": "Ø74x70 c/ rolamento de blindagem dupla",
                 "materiais": {
                     "Nylon": {
-                        "a vista": 2100,
+                        "avista": 2100,
                         "faturado": 2200
                     },
                     "Poliuretano": {
-                        "a vista": 2250,
+                        "avista": 2250,
                         "faturado": 2350
                     }
                 }
@@ -33,6 +34,7 @@ PRODUTOS = {
     },
 
     "TM3000": {
+        "tipo": "Transpalete Manual",
         "capacidade": "3.000 kg",
         "descricao": "Transpalete Manual 3.000kg",
         "rodagem": {
@@ -40,11 +42,11 @@ PRODUTOS = {
                 "roda": "Ø74x70 c/ rolamento de blindagem dupla",
                 "materiais": {
                     "Nylon": {
-                        "a vista": 2300,
+                        "avista": 2300,
                         "faturado": 2420
                     },
                     "Poliuretano": {
-                        "a vista": 2400,
+                        "avista": 2400,
                         "faturado": 2520
                     }
                 }
@@ -53,47 +55,53 @@ PRODUTOS = {
     },
 
     "PM516": {
+        "tipo": "Empilhadeira Manual",
         "capacidade": "500 kg",
         "elevação": "1.600 mm",
         "descricao": "Empilhadeira manual 500kg",
-        "a vista": 5300,
+        "avista": 5300,
         "faturado": 5680
     },
     "PM1016": {
+        "tipo": "Empilhadeira Manual",
         "capacidade": "1.000 kg",
         "elevação": "1.600 mm",
         "descricao": "Empilhadeira manual 1.000kg",
-        "a vista": 6650,
+        "avista": 6650,
         "faturado": 7120
     },
     "PM1516": {
+        "tipo": "Empilhadeira Manual",
         "capacidade": "1500 kg",
         "elevação": "1.600 mm",
         "descricao": "Empilhadeira manual 1.500kg",
-        "a vista": 7300,
+        "avista": 7300,
         "faturado": 7750
     },
 
     "PE1016": {
+        "tipo": "Empilhadeira Semi Elétrica",
         "capacidade": "1000 kg",
         "elevação": "1.600 mm",
         "descricao": "Empilhadeira semi elétrica 1.600mm",
-        "a vista": 18900,
+        "avista": 18900,
         "faturado": 19750
     },
 
     "PE1026": {
+        "tipo": "Empilhadeira Semi Elétrica",
         "capacidade": "1.000 kg",
         "elevação": "2.600 mm",
         "descricao": "Empilhadeira semi elétrica 2.600mm",
-        "a vista": 19800,
+        "avista": 19800,
         "faturado": 20700
     },
-    "PM1034": {
+    "PE1034": {
+        "tipo": "Empilhadeira Semi Elétrica",
         "capacidade": "1.000 kg",
         "elevação": "3.400 mm",
         "descricao": "Empilhadeira semi elétrica 3.400mm",
-        "a vista": 20200,
+        "avista": 20200,
         "faturado": 21200
     }
 }
